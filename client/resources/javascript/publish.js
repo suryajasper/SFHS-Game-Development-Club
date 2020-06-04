@@ -8,6 +8,16 @@ function replaceAll(orig, toReplace, replaceWith) {
   return replaced;
 }
 
+function setDate() {
+  var today = new Date();
+  var dd = String(today.getDate()).padStart(2, '0');
+  var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+  var yyyy = today.getFullYear();
+
+  today = mm + '/' + dd + '/' + yyyy;
+  document.getElementById('datePublishedOut').innerHTML = today;
+}
+
 initializeFirebase();
 
 var gameTitleOut = document.getElementById('gameTitleOut');
@@ -17,7 +27,7 @@ var keywordDisplay = document.getElementById('keywordDisplay');
 var keywordIn = document.getElementById('keywordIn');
 var keywordEnter = document.getElementById('enterKeyword');
 var thumbnailImg = document.getElementById('displayThumbnail');
-var thumbnailIn = document.getElementById('thumbnailIn');
+var thumbnailIn = document.getElementById('inputThumbnail');
 var gameFileUpload = document.getElementById('inputGameFile');
 
 gameTitleIn.oninput = function() {
@@ -38,9 +48,21 @@ descriptionIn.oninput = function() {
 
 keywordEnter.onclick = function(e) {
   e.preventDefault();
-  var p = document.createElement('p');
-  p.innerHTML = keywordIn.value;
-  p.classList.add('keyword');
-  keywordDisplay.appendChild(p);
-  keywordIn.value = '';
+  if (replaceAll(keywordIn.value, ' ', '') !== '') {
+    var p = document.createElement('p');
+    p.innerHTML = keywordIn.value;
+    p.classList.add('keyword');
+    keywordDisplay.appendChild(p);
+    keywordIn.value = '';
+  }
 }
+
+thumbnailIn.onchange = function(event) {
+  var reader = new FileReader();
+  reader.onload = function(){
+    thumbnailImg.src = reader.result;
+  }
+  reader.readAsDataURL(event.target.files[0]);
+}
+
+setDate();

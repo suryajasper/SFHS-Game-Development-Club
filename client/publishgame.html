@@ -11,7 +11,7 @@
 </head>
 <body>
   <div class = "split left">
-    <form style = "margin-left: 5vw; margin-top: 3vw;">
+    <form style = "margin-left: 5vw; margin-top: 1vw; margin-bottom: 3vw;">
       <h1>Game Title</h1>
       <input id = "gameTitleIn" type = "text" placeholder="title"></input>
       <h3>Game Description</h3>
@@ -19,9 +19,22 @@
       <h3>Keywords</h3>
       <input id = "keywordIn" type = "text"></input>
       <button style = "display: inline-block;" id = "enterKeyword">Add</button>
+      <h3>Main Genre</h3>
+      <div class="custom-select" style="width:200px;">
+        <select>
+          <option value="1">Action</option>
+          <option value="2">Action-adventure</option>
+          <option value="3">Adventure</option>
+          <option value="4">Role-Playing</option>
+          <option value="5">Simulation</option>
+          <option value="6">Strategy</option>
+          <option value="7">Sports</option>
+          <option value="8">Puzzle</option>
+          <option value="9">Idle</option>
+        </select>
+      </div>
       <h3>Thumbnail</h3>
-      <img style = "width: 400px; height: 300px;" id = "displayThumbnail"></img>
-      <input style = "display: block;" id = "inputThumbnail" type = "file" value = "Upload Thumbnail"></input>
+      <input style = "display: block;" id = "inputThumbnail" accept="image/*" type = "file" value = "Upload Thumbnail"></input>
       <h3>Upload Game</h3>
       <input id = "inputGameFile" type = "file" value ="Select Built Game File"></input>
     </form>
@@ -29,13 +42,19 @@
   <div class = "split right">
     <div style = "margin-left: 5vw; margin-top: 3vw;">
       <h1 style = "margin-left: 0px;" id = "gameTitleOut">Game Title</h1>
+      <img style = "width: 500px; height: 300px;" id = "displayThumbnail"></img>
       <p style = "margin-left: 10px;" id = "descriptionOut">Game Description</p>
-      <div id = "keywordDisplay"></div>
+      <h3 style = "display: inline-block; margin-right: 5px;">Keywords:</h3>
+      <div style = "display: inline-block;" id = "keywordDisplay"></div><br>
+      <h3 style = "display: inline-block;">Genre:</h3><p id = "genreOut" style = "display: inline-block; margin-left: 6px;"></p><br>
+      <h3 style = "display: inline-block;">Developers:</h3><p id = "devOut" style = "display: inline-block; margin-left: 6px;"></p><br>
+      <h3 style = "display: inline-block;">Date Published:</h3><p id = "datePublishedOut" style = "display: inline-block; margin-left: 6px;"></p>
     </div>
   </div>
   <script src="https://www.gstatic.com/firebasejs/7.9.3/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/7.9.3/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/7.9.3/firebase-database.js"></script>
+  <script src = "resources/javascript/customSelect.js"></script>
   <script src = "resources/javascript/firebase.js"></script>
   <script src = "resources/javascript/publish.js"></script>
 </body>
