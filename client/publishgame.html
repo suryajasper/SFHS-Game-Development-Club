@@ -10,20 +10,29 @@
   <link rel = "stylesheet" href = "resources/css/main.css">
 </head>
 <body>
-  <form style = "margin-left: 5vw; margin-top: 3vw;">
-    <h1 id = "gameTitleOut">Game Title</h1>
-    <input id = "gameTitleIn" type = "text" placeholder="title"></input>
-    <h3>Game Description</h3>
-    <textarea id = "description" placeholder = "briefly describe your game"></textarea>
-    <h3>Keywords</h3>
-    <div id = "keywordDisplay"></div>
-    <input id = "keywordIn" type = "text"></input><button style = "display: inline-block;" id = "enterKeyword">Add</button>
-    <h3>Thumbnail</h3>
-    <img style = "width: 400px; height: 300px;" id = "displayThumbnail"></img>
-    <input style = "display: block;" id = "inputThumbnail" type = "file" value = "Upload Thumbnail"></input>
-    <h3>Upload Game</h3>
-    <input id = "inputGameFile" type = "file" value ="Select Built Game File"></input>
-  </form>
+  <div class = "split left">
+    <form style = "margin-left: 5vw; margin-top: 3vw;">
+      <h1>Game Title</h1>
+      <input id = "gameTitleIn" type = "text" placeholder="title"></input>
+      <h3>Game Description</h3>
+      <textarea id = "description" placeholder = "briefly describe your game"></textarea>
+      <h3>Keywords</h3>
+      <input id = "keywordIn" type = "text"></input>
+      <button style = "display: inline-block;" id = "enterKeyword">Add</button>
+      <h3>Thumbnail</h3>
+      <img style = "width: 400px; height: 300px;" id = "displayThumbnail"></img>
+      <input style = "display: block;" id = "inputThumbnail" type = "file" value = "Upload Thumbnail"></input>
+      <h3>Upload Game</h3>
+      <input id = "inputGameFile" type = "file" value ="Select Built Game File"></input>
+    </form>
+  </div>
+  <div class = "split right">
+    <div style = "margin-left: 5vw; margin-top: 3vw;">
+      <h1 style = "margin-left: 0px;" id = "gameTitleOut">Game Title</h1>
+      <p style = "margin-left: 10px;" id = "descriptionOut">Game Description</p>
+      <div id = "keywordDisplay"></div>
+    </div>
+  </div>
   <script src="https://www.gstatic.com/firebasejs/7.9.3/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/7.9.3/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/7.9.3/firebase-database.js"></script>
