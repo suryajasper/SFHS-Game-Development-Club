@@ -3,6 +3,10 @@ body {
   color: rgb(219, 219, 219);*/
 }
 
+h1, h2, h3, h4 {
+  margin: 10px;
+}
+
 .center-outside {
   text-align: center;
   width: 100%;
@@ -54,4 +58,47 @@ body {
 .centered-horizontal {
   position: fixed;
   text-align: center;
+}
+
+.landingpage a {
+  display: inline-block;
+  margin-right: 15px;
+}
+
+input[type=text] {
+  margin-bottom: 8px;
+  margin-right: 8px;
+  display: block;
+  background-color:#414141;
+  border: 2px solid #414141;
+  border-radius: 4px;
+  padding: 8px 13px;
+  width: 500;
+  font-size:14px;
+  color: white;
+  cursor: pointer;
+  -webkit-transition: 0.5s;
+}
+input[type=text]:hover {
+  background-color:#555555;
+  border: 2px solid #555555;
+  -webkit-transition: 0.3s;
+}
+input[type=text]:focus {
+  color: white;
+  -webkit-transition: 0.5s;
+}
+
+textarea {
+  margin-bottom: 8px;
+  margin-right: 8px;
+  display: block;
+  background-color:#414141;
+  border: 2px solid #414141;
+  border-radius: 4px;
+  padding: 8px 13px;
+  width: 500px;
+  font-family: inherit;
+  color: white;
+  cursor: pointer;
 }
