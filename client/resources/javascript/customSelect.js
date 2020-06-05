@@ -29,6 +29,7 @@ for (i = 0; i < l; i++) {
         for (i = 0; i < sl; i++) {
           if (s.options[i].innerHTML == this.innerHTML) {
             console.log(this.innerHTML);
+            serialized.genre = this.innerHTML;
             document.getElementById('genreOut').innerHTML = this.innerHTML;
             s.selectedIndex = i;
             h.innerHTML = this.innerHTML;

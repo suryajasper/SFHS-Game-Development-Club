@@ -1,3 +1,5 @@
+var socket =io();
+
 var email = document.getElementById("email");
 var password = document.getElementById("password");
 
@@ -7,6 +9,7 @@ initializeFirebase();
 
 function signUpUser() {
   firebase.auth().createUserWithEmailAndPassword(email.value, password.value).then(auth => {
+    socket.emit('createUser', auth.user.uid, document.getElementById('fname').value, document.getElementById('lname').value);
     console.log("we signed up");
     window.location = 'login.html';
   }).catch(error => {
@@ -17,7 +20,7 @@ function signUpUser() {
 firebase.auth().onAuthStateChanged(user => {
   console.log("state changed");
   if(user) {
-    console.log(user.uid);
+
   }
 });
 
