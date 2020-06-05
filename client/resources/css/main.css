@@ -236,3 +236,30 @@ button:hover {
   background-color: #545353;
   -webkit-transition: 0.3s;
 }
+
+.game {
+  border: 2px solid black;
+  border-radius: 3px;
+  padding: 6px;
+  margin: 6px;
+  display: inline-block;
+}
+
+.game img {
+  border: 2px solid black;
+  border-radius: 3px;
+  margin-bottom: 5px;
+  display: block;
+  width: 500px;
+  height: 300px;
+}
+
+.game h2 {
+  text-align: center;
+}
+
+.game p.developers {
+  text-align: center;
+  margin-top: 4px;
+  margin-bottom: 3px;
+}

@@ -36,6 +36,12 @@ io.on('connection', function(socket){
     gamesUpdate[name] = gameObj;
     games.update(gamesUpdate);
   });
+
+  socket.on('getPublishedGames', function() {
+    games.once('value', function(snapshot) {
+      socket.emit('publishedGamesRes', snapshot.val());
+    })
+  })
 })
 
 http.listen(port, function(){
