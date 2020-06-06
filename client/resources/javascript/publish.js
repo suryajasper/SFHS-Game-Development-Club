@@ -2,7 +2,7 @@ var socket = io();
 
 initializeFirebase();
 
-var serialized = {name: '', description: '', genre: '', datePublished: '', keywords: [], developers: [], thumbnail: null};
+var serialized = {name: '', description: '', genre: '', datePublished: '', keywords: [], developers: [], thumbnail: null, links: []};
 
 function replaceAll(orig, toReplace, replaceWith) {
   var replaced = orig.replace(toReplace, replaceWith);
@@ -31,9 +31,9 @@ var keywordIn = document.getElementById('keywordIn');
 var keywordEnter = document.getElementById('enterKeyword');
 var thumbnailImg = document.getElementById('displayThumbnail');
 var thumbnailIn = document.getElementById('inputThumbnail');
-var gameFileUpload = document.getElementById('inputGameFile');
 var developerDiv = document.getElementById('developerDiv');
 var developerOut = document.getElementById('devOut');
+var linkDiv = document.getElementById('links');
 
 gameTitleIn.oninput = function() {
   if (gameTitleIn.value.length > 0) {
@@ -90,6 +90,57 @@ document.getElementById('addDeveloper').onclick = function(e) {
   input.type = 'text';
   input.oninput = refreshDevelopers;
   developerDiv.appendChild(input);
+}
+
+function refreshLinks() {
+  serialized.links = [];
+  for (var i = 0; i < linkDiv.children.length-1; i+= 3) {
+    serialized.links.push({title: linkDiv.children[i].value, url: linkDiv.children[i+1].value});
+    if (linkDiv.children[i+1].value !== '') {
+      $('#linksOut').empty();
+
+      var title = document.createElement('h2');
+      title.innerHTML = linkDiv.children[i].value;
+      document.getElementById('linksOut').appendChild(title);
+
+      var iframe;
+      if (linkDiv.children[i+1].value.includes('www.youtube.com/watch?v=')) {
+        iframe = document.createElement('iframe');
+        iframe.width = "480";
+        iframe.height = "270";
+        iframe.src = linkDiv.children[i+1].value.replace('watch?v=', 'embed/');
+      } else {
+        iframe = document.createElement('a');
+        iframe.innerHTML = linkDiv.children[i+1].value;
+        iframe.href = linkDiv.children[i+1].value;
+        iframe.style.display = 'inline-block';
+      } document.getElementById('linksOut').appendChild(iframe);
+    }
+  }
+}
+
+document.getElementById('addLink').onclick = function(e) {
+  e.preventDefault();
+
+  var titleInput = document.createElement('input');
+  titleInput.type = 'text';
+  titleInput.placeholder = 'title';
+  titleInput.style.display = 'inline-block';
+  titleInput.style.width = '250px';
+  titleInput.oninput = refreshLinks;
+
+  var linkInput = document.createElement('input');
+  linkInput.type = 'text';
+  linkInput.placeholder = 'url';
+  linkInput.style.display = 'inline-block';
+  linkInput.style.width = '250px';
+  linkInput.oninput = refreshLinks;
+
+  var br = document.createElement('br');
+
+  linkDiv.appendChild(titleInput);
+  linkDiv.appendChild(linkInput);
+  linkDiv.appendChild(br);
 }
 
 setDate();

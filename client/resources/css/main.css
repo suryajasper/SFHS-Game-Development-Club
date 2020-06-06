@@ -1,6 +1,7 @@
 body {
   /*background-color: rgb(8, 8, 8);
   color: rgb(219, 219, 219);*/
+  font-family: 'Roboto',sans-serif;
 }
 
 h1, h2, h3, h4 {
@@ -262,4 +263,15 @@ button:hover {
   text-align: center;
   margin-top: 4px;
   margin-bottom: 3px;
+}
+
+.publish {
+  padding: 5px;
+  border-radius: 2px;
+  background-color: black;
+  color: white;
+}
+
+.publish img {
+  margin-right: 4px;
 }
