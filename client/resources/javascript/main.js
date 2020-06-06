@@ -29,6 +29,9 @@ socket.on('publishedGamesRes', function(res) {
     var game = res[gameName];
 
     var div = document.createElement('div');
+    if ('backgroundColor' in game) {
+      div.style.background = game.backgroundColor;
+    }
     div.classList.add('game');
 
     var img = document.createElement('img');
@@ -41,9 +44,15 @@ socket.on('publishedGamesRes', function(res) {
 
     var title = document.createElement('h2');
     title.innerHTML = gameName;
+    if ('fontColor' in game) {
+      title.style.color = game.fontColor;
+    }
     div.appendChild(title);
 
     var devMentions = document.createElement('p');
+    if ('fontColor' in game) {
+      devMentions.style.color = game.fontColor;
+    }
     devMentions.classList.add('developers');
     var developers = 'by ' + game.developers[0];
     for (var i = 1; i < game.developers.length; i++) {

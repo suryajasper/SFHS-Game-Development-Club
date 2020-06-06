@@ -26,7 +26,7 @@ io.on('connection', function(socket){
       var currGames = snapshot.val();
       if (currGames !== null && 'games' in currGames) {
         var update = {};
-        update[Object.keys(currGames).length] = name;
+        update[Object.keys(currGames['games']).length] = name;
         userInfo.child(userID).child('games').update(update);
       } else {
         userInfo.child(userID).update({'games': {0: name}});
@@ -36,6 +36,10 @@ io.on('connection', function(socket){
     gamesUpdate[name] = gameObj;
     games.update(gamesUpdate);
   });
+
+  socket.on('changeColor', function(gameName, colorObj) {
+    games.child(gameName).update(colorObj);
+  })
 
   socket.on('getPublishedGames', function() {
     games.once('value', function(snapshot) {

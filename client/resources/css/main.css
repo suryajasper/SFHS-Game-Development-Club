@@ -244,6 +244,7 @@ button:hover {
   padding: 6px;
   margin: 6px;
   display: inline-block;
+  background: rgb(205, 205, 205);
 }
 
 .game img {

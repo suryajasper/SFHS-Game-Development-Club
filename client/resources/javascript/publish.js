@@ -148,10 +148,12 @@ setDate();
 firebase.auth().onAuthStateChanged(function(user) {
   socket.emit('getUserName', user.uid);
   socket.on('userNameRes', function(name) {
+    serialized.developers.push(name.firstName + ' ' + name.lastName);
     developerOut.innerHTML = name.firstName + ' ' + name.lastName;
   })
   publishButton.onclick = function(e) {
     e.preventDefault();
     socket.emit('publishGame', user.uid, serialized.name, serialized);
+    window.location.href = '/customizeCard.html?' + serialized.name;
   }
 })
