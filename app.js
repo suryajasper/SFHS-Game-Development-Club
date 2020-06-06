@@ -42,6 +42,12 @@ io.on('connection', function(socket){
       socket.emit('publishedGamesRes', snapshot.val());
     })
   })
+
+  socket.on('getGameInfo', function(gameName) {
+    games.child(gameName).once('value', function(snapshot) {
+      socket.emit('gameInfoRes', snapshot.val());
+    })
+  })
 })
 
 http.listen(port, function(){

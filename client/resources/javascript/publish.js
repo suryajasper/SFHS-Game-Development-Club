@@ -94,10 +94,10 @@ document.getElementById('addDeveloper').onclick = function(e) {
 
 function refreshLinks() {
   serialized.links = [];
-  for (var i = 0; i < linkDiv.children.length-1; i+= 3) {
+  $('#linksOut').empty();
+  for (var i = 0; i < linkDiv.children.length; i+= 3) {
     serialized.links.push({title: linkDiv.children[i].value, url: linkDiv.children[i+1].value});
     if (linkDiv.children[i+1].value !== '') {
-      $('#linksOut').empty();
 
       var title = document.createElement('h2');
       title.innerHTML = linkDiv.children[i].value;
