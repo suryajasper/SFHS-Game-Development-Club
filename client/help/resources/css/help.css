@@ -32,6 +32,8 @@ body {
     height: 100%;
     width: 27%;
     float: right;
+    position: fixed;
+    right: 0;
     background-color: #2f2d23;
 }
 
@@ -183,6 +185,9 @@ textarea {
     border-radius: 3px;
     background-color: #242424;
     padding: 0px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    display: block;
 }
 
 .questionBlock .questionBlockInner {
@@ -214,4 +219,17 @@ textarea {
 
 .questionBlock .questionBlockDescription {
     color: #cfcfcf;
+}
+
+@keyframes rotation {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(359deg);
+    }
+}
+
+.rotate {
+    animation: rotation 1s infinite linear;
 }
