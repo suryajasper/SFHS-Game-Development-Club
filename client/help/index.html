@@ -17,13 +17,18 @@
   </div>
   <div class = "main">
     <div class = "questionsList">
-        <div class = "containerPadding">
+        <div class = "containerPadding" style = "position: relative;">
             <h2>Questions</h2>
-            <div class = "actionPanel">
+            <div class = "actionPanel" style = "display: inline-block;">
                 <button id = "askQuestion" class = "button">Ask Question <img src = "resources/images/Plus.svg" style = "width: 17px; height: 17px; padding: 0px; margin: 0px;"></button>
                 <button id = "refresh" class = "button refresh">Refresh <img id = "refreshGraphic" src = "resources/images/refresh.png" class = "" style = "width: 17px; height: 17px; padding: 0px; margin: 0px;"></button>
             </div>
-            <div id = "questionPanel" style = "padding: 0px;">
+            <div id = "sortPanel" class = "sortPanel" style = "display: inline-block;">
+                <a class = "buttonSelect buttonSelectSelected buttonSelectLeft">Topic</a>
+                <a class = "buttonSelect">Date</a>
+                <a class = "buttonSelect buttonSelectRight">Popularity</a>
+            </div>
+            <div id = "questionPanel" style = "padding: 0px; display: block;">
             </div>
         </div>
     </div>
