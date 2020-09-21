@@ -7,7 +7,7 @@
 		  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
 		  crossorigin="anonymous"></script>
   <script src="/socket.io/socket.io.js"></script>
-  <link rel = "stylesheet" href = "resources/css/main.css">
+  <link rel = "stylesheet" href = "resources/css/help.css">
 </head>
 <body>
   <div class = "header">
@@ -23,6 +23,8 @@
                 <button id = "askQuestion" class = "button">Ask Question <img src = "resources/images/Plus.svg" style = "width: 17px; height: 17px; padding: 0px; margin: 0px;"></button>
                 <button id = "refresh" class = "button refresh">Refresh <img src = "resources/images/refresh.png" style = "width: 17px; height: 17px; padding: 0px; margin: 0px;"></button>
             </div>
+            <div id = "questionPanel" style = "padding: 0px;">
+            </div>
         </div>
     </div>
     <div class = "notificationsList">
@@ -33,10 +35,10 @@
   </div>
 
   <div id = "askQuestionPopup" class = "centered popup centerHorizontal" style = "width: 40%; display: none;">
-    Question<br><input style="width: 100%;"></input><br>
+    Question<br><input id = "questionIn" style="width: 100%;"></input><br>
     Topic<br>
     <div class="custom-select" style="width: 100%;">
-        <select>
+        <select id = "topicIn">
           <option value="0">--Select Topic</option>
           <option value="1">Unity</option>
           <option value="2">C#</option>
@@ -45,15 +47,15 @@
           <option value="5">Club</option>
         </select>
     </div>
-    Description (optional)<br><textarea style="width: 100%;"></textarea><br>
-    <button class = "button" style="display: inline-block; width: 49%;">Ask</button>
+    Description (optional)<br><textarea id = "descriptionIn" style="width: 100%;"></textarea><br>
+    <button id = "askQuestionButton" class = "button" style="display: inline-block; width: 49%;">Ask</button>
     <button id = "cancelAskQuestion" class = "button" style="display: inline-block; width: 49%; background-color: #7f4a43;">Cancel</button>
   </div>
   <script src="https://www.gstatic.com/firebasejs/7.9.3/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/7.9.3/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/7.9.3/firebase-database.js"></script>
-  <script src = "resources/js/firebase.js"></script>
-  <script src = "resources/js/customSelect.js"></script>
-  <script src = "resources/js/main.js"></script>
+  <script src = "../resources/javascript/firebase.js"></script>
+  <script src = "resources/javascript/customSelect.js"></script>
+  <script src = "resources/javascript/main.js"></script>
 </body>
 </html>

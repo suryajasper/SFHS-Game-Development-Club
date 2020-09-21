@@ -8,7 +8,7 @@ var submitButton = document.getElementById("login");
 
 function logInUser() {
     firebase.auth().signInWithEmailAndPassword(email.value, password.value).then(auth => {
-        window.location = 'main.html';
+        window.location = 'help';
     }).catch(error => {
         alert(error.message);
     });
@@ -16,7 +16,7 @@ function logInUser() {
 
 firebase.auth().onAuthStateChanged(user => {
     if (user) {
-        window.location = 'main.html';
+        window.location = 'help';
     }
 });
 

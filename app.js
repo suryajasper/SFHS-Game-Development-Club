@@ -16,6 +16,7 @@ admin.initializeApp({
 var database = admin.database();
 var userInfo = database.ref('userInfo');
 var games = database.ref('games');
+var questions = database.ref('questions');
 
 io.on('connection', function(socket) {
     socket.on('createUser', function(userID, _firstName, _lastName) {
@@ -59,6 +60,21 @@ io.on('connection', function(socket) {
         })
     })
 
+    socket.on('askQuestion', function(userID, data) {
+        data.askerID = userID;
+        var date = (new Date()).getTime();
+        questions.child(data.topic).child(date).set(data);
+
+        var userQuest = {};
+        userQuest[date] = data.topic;
+        userInfo.child(userID).child('questions').update(userQuest);
+    })
+
+    socket.on('getQuestions', function() {
+        questions.once('value', function(snapshot) {
+            socket.emit('questionsRes', snapshot.val());
+        })
+    })
 })
 
 http.listen(port, function() {

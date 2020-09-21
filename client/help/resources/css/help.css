@@ -170,8 +170,48 @@ textarea {
     color: white;
     resize: vertical;
     cursor: pointer;
+    font-family: inherit;
 }
 
 .popup * {
     margin-bottom: 10px;
+}
+
+.questionBlock {
+    width: 100%;
+    border: none;
+    border-radius: 3px;
+    background-color: #242424;
+    padding: 0px;
+}
+
+.questionBlock .questionBlockInner {
+    padding: 5px;
+    padding-left: 15px;
+    padding-right: 15px;
+    position: relative;
+}
+
+.questionBlock .questionBlockQuestion {
+    font-size: 1.5em;
+    color: white;
+    margin-top: 0px;
+}
+
+.questionBlock .questionBlockTopic {
+    font-size: 1.5em;
+    color: #b6905d;
+    background-color: #363636;
+    border-radius: 3px;
+    display: inline-block;
+    padding: 3px;
+    margin: 0px;
+    margin-left: 5px;
+    right: 5px;
+    top: 5px;
+    position: absolute;
+}
+
+.questionBlock .questionBlockDescription {
+    color: #cfcfcf;
 }
