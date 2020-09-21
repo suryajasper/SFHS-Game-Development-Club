@@ -1,25 +1,26 @@
 {
-  "name": "sfhs-game-publication",
-  "version": "1.0.0",
-  "description": "a website to publish games for the SFHS game development club",
-  "main": "app.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/suryajasper/SFHS-Game-Publication.git"
-  },
-  "author": "Surya Jasper",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/suryajasper/SFHS-Game-Publication/issues"
-  },
-  "homepage": "https://github.com/suryajasper/SFHS-Game-Publication#readme",
-  "dependencies": {
-    "express": "^4.17.1",
-    "firebase-admin": "^8.12.1",
-    "http": "0.0.1-security",
-    "socket.io": "^2.3.0"
-  }
+    "name": "sfhs-game-publication",
+    "version": "1.0.0",
+    "description": "a website to publish games for the SFHS game development club",
+    "main": "app.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "node app.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/suryajasper/SFHS-Game-Publication.git"
+    },
+    "author": "Surya Jasper",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/suryajasper/SFHS-Game-Publication/issues"
+    },
+    "homepage": "https://github.com/suryajasper/SFHS-Game-Publication#readme",
+    "dependencies": {
+        "express": "^4.17.1",
+        "firebase-admin": "^8.12.1",
+        "http": "0.0.1-security",
+        "socket.io": "^2.3.0"
+    }
 }
