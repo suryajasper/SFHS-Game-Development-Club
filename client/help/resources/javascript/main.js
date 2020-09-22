@@ -12,10 +12,14 @@ document.getElementById('cancelAskQuestion').onclick = function() {
     document.getElementById('askQuestionPopup').style.display = 'none';
 }
 
-function refresh() {
+document.getElementById('reverseButton').onclick = function() {
+    refresh(true);
+}
+
+function refresh(reverse) {
     document.getElementById('refreshGraphic').classList.add('rotate');
     $('#questionPanel').empty();
-    addQuestions(sortType);
+    addQuestions(sortType, reverse);
 }
 
 document.getElementById('refresh').onclick = refresh;
@@ -26,7 +30,7 @@ function insertAfter(newNode, existingNode) {
 
 var mouseOverStuff = { answerDiv: null, questionDiv: null };
 
-function addQuestions(sort) {
+function addQuestions(sort, reverseSort) {
     socket.emit('getQuestions');
     socket.on('questionsRes', function(res) {
         var byDate = {};
@@ -101,7 +105,10 @@ function addQuestions(sort) {
             dict = byDate;
             reverse = true;
         } else if (sort === 'byTopic' || sort === undefined || sort === null) {
-            dict = byDate;
+            dict = byTopic;
+        }
+        if (reverseSort) {
+            reverse = !reverse;
         }
         var keys = Object.keys(dict);
         keys.sort();
