@@ -6,6 +6,7 @@ body {
 
 .header {
     position: fixed;
+    z-index: 1000;
     top: 0px;
     height: 50px;
     width: 100%;
@@ -187,6 +188,7 @@ textarea {
     padding: 0px;
     margin-bottom: 10px;
     margin-top: 10px;
+    cursor: pointer;
     display: block;
 }
 
@@ -198,13 +200,14 @@ textarea {
 }
 
 .questionBlock .questionBlockQuestion {
+    margin-bottom: 6px;
     font-size: 1.5em;
     color: white;
     margin-top: 0px;
 }
 
 .questionBlock .questionBlockTopic {
-    font-size: 1.5em;
+    font-size: 1.3em;
     color: #b6905d;
     background-color: #363636;
     border-radius: 3px;
@@ -215,6 +218,14 @@ textarea {
     right: 5px;
     top: 5px;
     position: absolute;
+}
+
+.questionBlock .questionBlockDate {
+    color: #cdc2a8;
+    display: block;
+    position: relative;
+    font-size: 0.75em;
+    margin-top: 0;
 }
 
 .questionBlock .questionBlockDescription {
@@ -269,4 +280,32 @@ textarea {
 .buttonSelectRight {
     border-top-right-radius: 4px;
     border-bottom-right-radius: 4px;
+}
+
+.answerDiv {
+    position: relative;
+}
+
+.answerDivBottomRight {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
+
+.answerDivBottomRight .answerDivButton {
+    display: inline-block;
+    margin-left: 5px;
+    padding: 6px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    color: white;
+    background-color: #6d5522;
+}
+
+.answerDivInput {
+    cursor: text;
+    width: 100%;
+    margin-top: 0px;
+    border-top-left-radius: 0px;
 }
