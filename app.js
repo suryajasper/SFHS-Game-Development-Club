@@ -75,6 +75,35 @@ io.on('connection', function(socket) {
             socket.emit('questionsRes', snapshot.val());
         })
     })
+
+    socket.on('getUserName', function(userID) {
+        userInfo.child(userID).once('value', function(userSnap) {
+            socket.emit('userNameRes', userSnap.val().firstName + " " + userSnap.val().lastName);
+        })
+    })
+
+    socket.on('answerQuestion', function(userID, questionTime, answer) {
+        questions.once('value', function(questionSnap) {
+            var quest = questionSnap.val();
+            var questionInUnanswered = false;
+            for (var topic of Object.keys(quest)) {
+                if (questionTime in quest.unanswered[topic]) {
+                    questionInUnanswered = true;
+                    questions.child('unanswered').child(topic).child(questionTime).remove();
+                    var update = quest.unanswered[topic][questionTime];
+                    update.answers = [{ answer: answer, answerID: userID }];
+                    questions.child('answered').child(questionTime).set(update);
+                    break;
+                }
+            }
+            if (!questionInUnanswered && questionTime in quest.answered) {
+                var numAnswers = quest.answered[questionTime].answers.length;
+                var update = {};
+                update[numAnswers] = { answer: answer, answerID: userID };
+                questions.child('answered').child(questionTime).child(answers).update(update);
+            }
+        })
+    })
 })
 
 http.listen(port, function() {
