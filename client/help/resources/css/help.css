@@ -192,6 +192,10 @@ textarea {
     display: block;
 }
 
+.questionBlockAnswered {
+    background-color: #242424;
+}
+
 .questionBlock .questionBlockInner {
     padding: 5px;
     padding-left: 15px;
@@ -321,9 +325,11 @@ textarea {
     resize: vertical;
     cursor: pointer;
     font-family: inherit;
+    border-bottom: 1px solid white;
 }
 
 .answerDivAnswer:last-child {
+    border-bottom: none;
     border-radius: 3px;
     border-top-left-radius: 0px;
     border-top-right-radius: 0px;

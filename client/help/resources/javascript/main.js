@@ -35,6 +35,7 @@ var mouseOverStuff = { answerDiv: null, questionDiv: null };
 function parseQuestionRes(res) {
     var byDate = {};
     var byTopic = {};
+    var all = [];
     for (var topic of Object.keys(res)) {
         byTopic[topic] = [];
         for (var date of Object.keys(res[topic]))(function(date) {
@@ -85,6 +86,7 @@ function parseQuestionRes(res) {
                 answerDivButton.innerHTML = 'Answer';
                 answerDivButton.onclick = function() {
                     socket.emit('answerQuestion', userID, date, answerDivInput.value);
+                    answerDiv.remove();
                 }
                 answerDivBottomRight.appendChild(answerDivButton);
 
@@ -96,9 +98,82 @@ function parseQuestionRes(res) {
             }
 
             byTopic[topic].push(div);
+            all.push(div);
         })(date);
     }
-    return { byDate: byDate, byTopic: byTopic };
+    return { byDate: byDate, byTopic: byTopic, all: all };
+}
+
+function parseQuestionResUnanswered(res) {
+    for (var date of Object.keys(res))(function(date) {
+        var question = res[date];
+        var div = document.createElement('div');
+        div.classList.add('questionBlock');
+        div.classList.add('questionBlockAnswered');
+        var dateObj = new Date(parseInt(date));
+        div.innerHTML = '<div class = "questionBlockInner"><p class = "questionBlockQuestion">' + question.question + '<span style = "color: #6a0c0c"><b> (ANSWERED)</b></span></p>' +
+            '<p class = "questionBlockTopic">' + question.topic.replaceAll('__sharp__', '#') + '</p>' +
+            '<p class = "questionBlockDate">' + dateObj.toLocaleDateString() + ' @ ' + dateObj.toLocaleTimeString() + '</p>' +
+            '<p class = "questionBlockDescription">' + question.description + '</p></div>';
+
+        div.onclick = function() {
+            if (mouseOverStuff.answerDiv !== null) {
+                if (mouseOverStuff.questionDiv !== this) {
+                    mouseOverStuff.answerDiv.remove();
+                    mouseOverStuff.questionDiv.style.marginBottom = '10px';
+                } else {
+                    return;
+                }
+            }
+
+            this.style.marginBottom = '0px';
+
+            var answerDiv = document.createElement('div');
+            answerDiv.classList.add('answerDiv');
+
+            var answerDivInput = document.createElement('textarea');
+            answerDivInput.classList.add('answerDivInput');
+            answerDiv.appendChild(answerDivInput);
+
+            var answerDivBottomRight = document.createElement('div');
+            answerDivBottomRight.classList.add('answerDivBottomRight');
+
+            var cancelButton = document.createElement('button');
+            cancelButton.classList.add('answerDivButton');
+            cancelButton.innerHTML = 'Cancel';
+            cancelButton.onclick = function() {
+                answerDiv.remove();
+            }
+            answerDivBottomRight.appendChild(cancelButton);
+
+            var answerDivButton = document.createElement('button');
+            answerDivButton.classList.add('answerDivButton');
+            answerDivButton.innerHTML = 'Answer';
+            answerDivButton.onclick = function() {
+                socket.emit('answerQuestion', userID, date, answerDivInput.value);
+                answerDiv.remove();
+            }
+            answerDivBottomRight.appendChild(answerDivButton);
+
+            answerDiv.appendChild(answerDivBottomRight);
+
+            mouseOverStuff.answerDiv = answerDiv;
+            mouseOverStuff.questionDiv = this;
+            insertAfter(answerDiv, this);
+        }
+
+        document.getElementById('questionPanel').appendChild(div);
+
+        for (var answer of Object.values(question.answers)) {
+            //for (var i = 0; i < 5; i++) {
+            div.style.marginBottom = '0px';
+            var divAnswer = document.createElement('div');
+            divAnswer.innerHTML = answer.answer;
+            divAnswer.classList.add('answerDivAnswer');
+            insertAfter(divAnswer, div);
+            //}
+        }
+    })(date);
 }
 
 function addQuestions(sort, reverseSort) {
@@ -130,6 +205,8 @@ function addQuestions(sort, reverseSort) {
                     document.getElementById('questionPanel').appendChild(div);
                 }
             }
+
+            parseQuestionResUnanswered(raw_res.answered);
         }
         document.getElementById('refreshGraphic').classList.remove('rotate');
     })

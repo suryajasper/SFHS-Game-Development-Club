@@ -86,10 +86,11 @@ io.on('connection', function(socket) {
     socket.on('answerQuestion', function(userID, questionTime, answer) {
         userInfo.child(userID).once('value', function(userSnap) {
             var isAdmin = userSnap.val().isAdmin;
+            if (isAdmin === undefined) isAdmin = false;
             questions.once('value', function(questionSnap) {
                 var quest = questionSnap.val();
                 var questionInUnanswered = false;
-                for (var topic of Object.keys(quest)) {
+                for (var topic of Object.keys(quest.unanswered)) {
                     if (questionTime in quest.unanswered[topic]) {
                         questionInUnanswered = true;
                         questions.child('unanswered').child(topic).child(questionTime).remove();
@@ -100,10 +101,10 @@ io.on('connection', function(socket) {
                     }
                 }
                 if (!questionInUnanswered && questionTime in quest.answered) {
-                    var numAnswers = quest.answered[questionTime].answers.length;
+                    var numAnswers = Object.values(quest.answered[questionTime].answers).length;
                     var update = {};
                     update[numAnswers] = { answer: answer, answerID: userID, byAdmin: isAdmin };
-                    questions.child('answered').child(questionTime).child(answers).update(update);
+                    questions.child('answered').child(questionTime).child('answers').update(update);
                 }
             })
         })
