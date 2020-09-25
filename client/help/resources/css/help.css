@@ -13,6 +13,21 @@ body {
     background-color: #473615;
 }
 
+.header .logo {
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    cursor: pointer;
+    text-decoration: none;
+    color: white;
+    font-size: 36px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+}
+
 .main {
     margin-top: 50px;
     height: 100%;
@@ -29,6 +44,10 @@ body {
     background-color: #1a1a1a;
 }
 
+.questionsList.hidden {
+    width: 100%;
+}
+
 .notificationsList {
     height: 100%;
     width: 27%;
@@ -36,6 +55,10 @@ body {
     position: fixed;
     right: 0;
     background-color: #2f2d23;
+}
+
+.notificationsList.hidden {
+    width: 0%;
 }
 
 .actionPanel * {

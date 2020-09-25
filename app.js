@@ -69,6 +69,7 @@ io.on('connection', function(socket) {
         var userQuest = {};
         userQuest[date] = data.topic;
         userInfo.child(userID).child('questions').update(userQuest);
+        socket.emit('refresh');
     })
 
     socket.on('getQuestions', function() {
@@ -106,6 +107,7 @@ io.on('connection', function(socket) {
                     update[numAnswers] = { answer: answer, answerID: userID, byAdmin: isAdmin };
                     questions.child('answered').child(questionTime).child('answers').update(update);
                 }
+                socket.emit('refresh');
             })
         })
     })

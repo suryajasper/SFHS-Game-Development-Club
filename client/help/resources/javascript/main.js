@@ -18,6 +18,20 @@ document.getElementById('reverseButton').onclick = function() {
     refresh(true);
 }
 
+document.getElementById('hideUpdates').onclick = function() {
+    var questionList = document.getElementsByClassName('questionsList')[0];
+    var notList = document.getElementsByClassName('notificationsList')[0];
+    if (questionList.classList.contains('hidden')) {
+        questionList.classList.remove('hidden');
+        notList.classList.remove('hidden');
+        document.getElementById('hideUpdates').src = 'resources/images/sidebarIcon.svg';
+    } else {
+        questionList.classList.add('hidden');
+        notList.classList.add('hidden');
+        document.getElementById('hideUpdates').src = 'resources/images/sidebarIconHidden.svg';
+    }
+}
+
 function refresh(reverse) {
     document.getElementById('refreshGraphic').classList.add('rotate');
     $('#questionPanel').empty();
@@ -206,7 +220,12 @@ function addQuestions(sort, reverseSort) {
                 }
             }
 
-            parseQuestionResUnanswered(raw_res.answered);
+            if (raw_res.answered) {
+                var line = document.createElement('h2');
+                line.innerHTML = 'Answered';
+                document.getElementById('questionPanel').appendChild(line);
+                parseQuestionResUnanswered(raw_res.answered);
+            }
         }
         document.getElementById('refreshGraphic').classList.remove('rotate');
     })
@@ -242,3 +261,7 @@ for (var selectButton of sortChildren) {
         refresh();
     }
 }
+
+socket.on('refresh', function() {
+    refresh();
+})
