@@ -306,6 +306,25 @@ textarea {
 .answerDivInput {
     cursor: text;
     width: 100%;
-    margin-top: 0px;
     border-top-left-radius: 0px;
+}
+
+.answerDivAnswer {
+    padding: 10px;
+    font-size: 1em;
+    margin-top: 0px;
+    border: none;
+    border-radius: 0px;
+    outline: none;
+    background-color: #414141;
+    color: white;
+    resize: vertical;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.answerDivAnswer:last-child {
+    border-radius: 3px;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
 }

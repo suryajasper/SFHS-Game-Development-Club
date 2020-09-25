@@ -19,8 +19,9 @@ var games = database.ref('games');
 var questions = database.ref('questions');
 
 io.on('connection', function(socket) {
-    socket.on('createUser', function(userID, _firstName, _lastName) {
-        userInfo.child(userID).update({ firstName: _firstName, lastName: _lastName });
+    socket.on('createUser', function(userID, email, _firstName, _lastName) {
+        var isAdmin = email === 'suryajasper@sfhs.com' || email === 'shlokshah@sfhs.com';
+        userInfo.child(userID).update({ firstName: _firstName, lastName: _lastName, isAdmin: isAdmin });
     });
     socket.on('getUserName', function(userID) {
         userInfo.child(userID).once('value', function(snapshot) {
@@ -63,7 +64,7 @@ io.on('connection', function(socket) {
     socket.on('askQuestion', function(userID, data) {
         data.askerID = userID;
         var date = (new Date()).getTime();
-        questions.child(data.topic).child(date).set(data);
+        questions.child('unanswered').child(data.topic).child(date).set(data);
 
         var userQuest = {};
         userQuest[date] = data.topic;
@@ -83,25 +84,28 @@ io.on('connection', function(socket) {
     })
 
     socket.on('answerQuestion', function(userID, questionTime, answer) {
-        questions.once('value', function(questionSnap) {
-            var quest = questionSnap.val();
-            var questionInUnanswered = false;
-            for (var topic of Object.keys(quest)) {
-                if (questionTime in quest.unanswered[topic]) {
-                    questionInUnanswered = true;
-                    questions.child('unanswered').child(topic).child(questionTime).remove();
-                    var update = quest.unanswered[topic][questionTime];
-                    update.answers = [{ answer: answer, answerID: userID }];
-                    questions.child('answered').child(questionTime).set(update);
-                    break;
+        userInfo.child(userID).once('value', function(userSnap) {
+            var isAdmin = userSnap.val().isAdmin;
+            questions.once('value', function(questionSnap) {
+                var quest = questionSnap.val();
+                var questionInUnanswered = false;
+                for (var topic of Object.keys(quest)) {
+                    if (questionTime in quest.unanswered[topic]) {
+                        questionInUnanswered = true;
+                        questions.child('unanswered').child(topic).child(questionTime).remove();
+                        var update = quest.unanswered[topic][questionTime];
+                        update.answers = [{ answer: answer, answerID: userID, byAdmin: isAdmin }];
+                        questions.child('answered').child(questionTime).set(update);
+                        break;
+                    }
                 }
-            }
-            if (!questionInUnanswered && questionTime in quest.answered) {
-                var numAnswers = quest.answered[questionTime].answers.length;
-                var update = {};
-                update[numAnswers] = { answer: answer, answerID: userID };
-                questions.child('answered').child(questionTime).child(answers).update(update);
-            }
+                if (!questionInUnanswered && questionTime in quest.answered) {
+                    var numAnswers = quest.answered[questionTime].answers.length;
+                    var update = {};
+                    update[numAnswers] = { answer: answer, answerID: userID, byAdmin: isAdmin };
+                    questions.child('answered').child(questionTime).child(answers).update(update);
+                }
+            })
         })
     })
 })
