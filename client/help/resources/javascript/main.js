@@ -6,6 +6,25 @@ var userID;
 
 var sortType = 'byTopic';
 
+String.prototype.replaceAll = function(orig, toReplace) {
+    var newString = this;
+    while (newString !== newString.replace(orig, toReplace)) {
+        newString = newString.replace(orig, toReplace);
+    }
+    return newString;
+}
+
+function URLify(string) {
+    var urls = string.match(/(((ftp|https?):\/\/)[\-\w@:%_\+.~#?,&\/\/=]+)/g);
+    if (urls) {
+        urls.forEach(function(url) {
+            string = string.replace(url, '<a target="_blank" href="' + url + '">' + url + "</a>");
+        });
+    }
+    return string.replace("(", "<br/>(");
+}
+
+
 document.getElementById('askQuestion').onclick = function() {
     document.getElementById('askQuestionPopup').style.display = 'block';
 }
@@ -60,7 +79,7 @@ function parseQuestionRes(res) {
             div.innerHTML = '<div class = "questionBlockInner"><p class = "questionBlockQuestion">' + question.question + '</p>' +
                 '<p class = "questionBlockTopic">' + question.topic.replaceAll('__sharp__', '#') + '</p>' +
                 '<p class = "questionBlockDate">' + dateObj.toLocaleDateString() + ' @ ' + dateObj.toLocaleTimeString() + '</p>' +
-                '<p class = "questionBlockDescription">' + question.description + '</p></div>';
+                '<p class = "questionBlockDescription">' + URLify(question.description) + '</p></div>';
 
             if (date in byDate) byDate[date].push(div);
             else byDate[date] = [div];
@@ -99,7 +118,7 @@ function parseQuestionRes(res) {
                 answerDivButton.classList.add('answerDivButton');
                 answerDivButton.innerHTML = 'Answer';
                 answerDivButton.onclick = function() {
-                    socket.emit('answerQuestion', userID, date, answerDivInput.value);
+                    socket.emit('answerQuestion', userID, date, URLify(answerDivInput.value));
                     answerDiv.remove();
                 }
                 answerDivBottomRight.appendChild(answerDivButton);
@@ -128,7 +147,7 @@ function parseQuestionResUnanswered(res) {
         div.innerHTML = '<div class = "questionBlockInner"><p class = "questionBlockQuestion">' + question.question + '<span style = "color: #6a0c0c"><b> (ANSWERED)</b></span></p>' +
             '<p class = "questionBlockTopic">' + question.topic.replaceAll('__sharp__', '#') + '</p>' +
             '<p class = "questionBlockDate">' + dateObj.toLocaleDateString() + ' @ ' + dateObj.toLocaleTimeString() + '</p>' +
-            '<p class = "questionBlockDescription">' + question.description + '</p></div>';
+            '<p class = "questionBlockDescription">' + URLify(question.description) + '</p></div>';
 
         div.onclick = function() {
             if (mouseOverStuff.answerDiv !== null) {
@@ -164,7 +183,7 @@ function parseQuestionResUnanswered(res) {
             answerDivButton.classList.add('answerDivButton');
             answerDivButton.innerHTML = 'Answer';
             answerDivButton.onclick = function() {
-                socket.emit('answerQuestion', userID, date, answerDivInput.value);
+                socket.emit('answerQuestion', userID, date, URLify(answerDivInput.value));
                 answerDiv.remove();
             }
             answerDivBottomRight.appendChild(answerDivButton);
