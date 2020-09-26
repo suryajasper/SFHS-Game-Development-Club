@@ -201,8 +201,15 @@ function parseQuestionResUnanswered(res) {
             //for (var i = 0; i < 5; i++) {
             div.style.marginBottom = '0px';
             var divAnswer = document.createElement('div');
-            divAnswer.innerHTML = answer.answer;
             divAnswer.classList.add('answerDivAnswer');
+            var answerText = answer.answer;
+            if (answer.byAdmin) {
+                divAnswer.classList.add('answerDivAnswerByAdmin');
+            }
+            if ('answerName' in answer) {
+                answerText = '<span class = "answerDivName ' + (answer.byAdmin ? 'answerDivNameAdmin' : '') + '">' + answer.answerName + '</span> ' + answer.answer;
+            }
+            divAnswer.innerHTML = answerText;
             insertAfter(divAnswer, div);
             //}
         }

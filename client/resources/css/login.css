@@ -1,0 +1,46 @@
+body {
+    background-color: #1a1a1a;
+    color: white;
+}
+
+input[type=text] {
+    margin: 0px;
+}
+
+input {
+    margin-bottom: 4px;
+    display: block;
+    background-color: #414141;
+    border: 2px solid #414141;
+    border-radius: 4px;
+    padding: 8px 13px;
+    width: 500;
+    font-size: 14px;
+    color: white;
+    cursor: pointer;
+    outline: none;
+    -webkit-transition: 0.5s;
+}
+
+input:hover {
+    background-color: #555555;
+    border: 2px solid #555555;
+    -webkit-transition: 0.3s;
+}
+
+input:focus {
+    color: white;
+    -webkit-transition: 0.5s;
+}
+
+input[type=submit] {
+    background-color: #99722e;
+    border: none;
+    outline: none;
+}
+
+form {
+    background-color: #0f0f0f7d;
+    padding: 10px;
+    border-radius: 4px;
+}

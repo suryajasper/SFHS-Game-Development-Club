@@ -14,12 +14,6 @@ function logInUser() {
     });
 }
 
-firebase.auth().onAuthStateChanged(user => {
-    if (user) {
-        window.location = 'help';
-    }
-});
-
 submitButton.onclick = function(e) {
     e.preventDefault();
     logInUser();

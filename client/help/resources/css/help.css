@@ -2,6 +2,7 @@ body {
     padding: 0px;
     margin: 0px;
     color: white;
+    background-color: #1a1a1a;
 }
 
 .header {
@@ -38,6 +39,7 @@ body {
 }
 
 .questionsList {
+    position: relative;
     height: 100%;
     width: 73%;
     float: left;
@@ -344,10 +346,33 @@ textarea {
     border-radius: 0px;
     outline: none;
     background-color: #414141;
-    color: white;
+    color: #d1d1d1;
     resize: vertical;
     font-family: inherit;
     border-bottom: 1px solid #ababab;
+}
+
+.answerDivAnswer .answerDivName {
+    font-weight: bold;
+    background-color: #6b6b6b;
+    color: white;
+    border: none;
+    border-radius: 2px;
+    padding: 4px;
+}
+
+.answerDivAnswer .answerDivNameAdmin {
+    font-weight: bold;
+    background-color: #8d7449;
+    color: white;
+    border: none;
+    border-radius: 2px;
+    padding: 4px;
+}
+
+.answerDivAnswerByAdmin {
+    background-color: #5a4e30;
+    color: white;
 }
 
 .answerDivAnswer a {

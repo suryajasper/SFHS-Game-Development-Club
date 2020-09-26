@@ -19,7 +19,7 @@ var games = database.ref('games');
 var questions = database.ref('questions');
 
 io.on('connection', function(socket) {
-    socket.on('createUser', function(userID, email, _firstName, _lastName) {
+    socket.on('createUser', function(email, userID, _firstName, _lastName) {
         var isAdmin = email === 'suryajasper@sfhs.com' || email === 'shlokshah@sfhs.com';
         userInfo.child(userID).update({ firstName: _firstName, lastName: _lastName, isAdmin: isAdmin });
     });
@@ -86,7 +86,8 @@ io.on('connection', function(socket) {
 
     socket.on('answerQuestion', function(userID, questionTime, answer) {
         userInfo.child(userID).once('value', function(userSnap) {
-            var isAdmin = userSnap.val().isAdmin;
+            var userInf = userSnap.val();
+            var isAdmin = userInf.isAdmin;
             if (isAdmin === undefined) isAdmin = false;
             questions.once('value', function(questionSnap) {
                 var quest = questionSnap.val();
@@ -96,7 +97,7 @@ io.on('connection', function(socket) {
                         questionInUnanswered = true;
                         questions.child('unanswered').child(topic).child(questionTime).remove();
                         var update = quest.unanswered[topic][questionTime];
-                        update.answers = [{ answer: answer, answerID: userID, byAdmin: isAdmin }];
+                        update.answers = [{ answer: answer, answerID: userID, byAdmin: isAdmin, answerName: userInf.firstName + ' ' + userInf.lastName }];
                         questions.child('answered').child(questionTime).set(update);
                         break;
                     }
@@ -104,7 +105,7 @@ io.on('connection', function(socket) {
                 if (!questionInUnanswered && questionTime in quest.answered) {
                     var numAnswers = Object.values(quest.answered[questionTime].answers).length;
                     var update = {};
-                    update[numAnswers] = { answer: answer, answerID: userID, byAdmin: isAdmin };
+                    update[numAnswers] = { answer: answer, answerID: userID, byAdmin: isAdmin, answerName: userInf.firstName + ' ' + userInf.lastName };
                     questions.child('answered').child(questionTime).child('answers').update(update);
                 }
                 socket.emit('refresh');
