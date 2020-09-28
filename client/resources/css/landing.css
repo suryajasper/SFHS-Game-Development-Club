@@ -1,0 +1,47 @@
+body {
+    color: white;
+    background-color: #1a1a1a;
+}
+
+.centered {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.container {
+    position: relative;
+    text-align: center;
+    color: white;
+}
+
+.on-image {
+    cursor: pointer;
+    position: absolute;
+    font-size: 3em;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -webkit-transition: 0.25s;
+}
+
+.bottom-left {
+    bottom: 100px;
+    left: 110px;
+    transform: rotate3d(1, 2, 1.5, 43deg);
+}
+
+.bottom-right {
+    bottom: 100px;
+    right: 90px;
+    transform: rotate3d(-1, 2, 1.5, -47deg);
+}
+
+.top {
+    top: 100px;
+    left: 185px;
+}
+
+.on-image:hover {
+    -webkit-transition: 0.25s;
+}

@@ -1,8 +1,13 @@
 body {
+    font-family: "Trebuchet MS", Helvetica, sans-serif;
     padding: 0px;
     margin: 0px;
     color: white;
     background-color: #1a1a1a;
+}
+
+body * {
+    font-family: inherit;
 }
 
 .header {

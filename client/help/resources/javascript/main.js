@@ -272,6 +272,8 @@ firebase.auth().onAuthStateChanged(function(user) {
             socket.emit('askQuestion', user.uid, data);
             document.getElementById('askQuestionPopup').style.display = 'none';
         }
+    } else {
+        window.location.href = '/signup.html';
     }
 })
 
