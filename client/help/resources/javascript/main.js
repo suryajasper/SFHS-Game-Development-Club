@@ -85,9 +85,9 @@ document.getElementById('newUpdateButton').onclick = function() {
 }
 
 function refreshUpdates() {
-    $('updateList').empty();
     socket.emit('getUpdates');
     socket.on('updatesRes', function(res) {
+        $('#updateList').empty();
         for (var time of Object.keys(res)) {
             var update = res[time];
             var updateDiv = document.createElement('div');
@@ -336,13 +336,15 @@ firebase.auth().onAuthStateChanged(function(user) {
 var sortChildren = document.getElementById('sortPanel').children;
 for (var selectButton of sortChildren) {
     selectButton.onclick = function(e) {
-        e.preventDefault();
-        for (var s of sortChildren) {
-            s.classList.remove('buttonSelectSelected');
+        if (!this.classList.contains('unfinished')) {
+            e.preventDefault();
+            for (var s of sortChildren) {
+                s.classList.remove('buttonSelectSelected');
+            }
+            this.classList.add('buttonSelectSelected');
+            sortType = 'by' + this.textContent;
+            refresh();
         }
-        this.classList.add('buttonSelectSelected');
-        sortType = 'by' + this.textContent;
-        refresh();
     }
 }
 
