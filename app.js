@@ -17,6 +17,7 @@ var database = admin.database();
 var userInfo = database.ref('userInfo');
 var games = database.ref('games');
 var questions = database.ref('questions');
+var updates = database.ref('updates');
 
 io.on('connection', function(socket) {
     socket.on('createUser', function(email, userID, _firstName, _lastName) {
@@ -110,6 +111,22 @@ io.on('connection', function(socket) {
                 }
                 socket.emit('refresh');
             })
+        })
+    })
+
+    socket.on('addUpdate', function(userID, text) {
+        userInfo.child(userID).once('value', function(snapshot) {
+            var time = (new Date()).getTime();
+            updates.child(time).set({
+                content: text,
+                sender: snapshot.val()
+            });
+        })
+    })
+
+    socket.on('getUpdates', function() {
+        updates.once('value', function(snap) {
+            socket.emit('updatesRes', snap.val());
         })
     })
 })

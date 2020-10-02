@@ -51,10 +51,60 @@ document.getElementById('hideUpdates').onclick = function() {
     }
 }
 
+document.getElementById('newUpdateButton').onclick = function() {
+    var answerDiv = document.createElement('div');
+    answerDiv.classList.add('answerDiv');
+
+    var textarea = document.createElement('textarea');
+    textarea.classList.add('newUpdateField');
+    answerDiv.appendChild(textarea);
+
+    var answerDivBottomRight = document.createElement('div');
+    answerDivBottomRight.classList.add('answerDivBottomRight');
+
+    var cancelButton = document.createElement('button');
+    cancelButton.classList.add('answerDivButton');
+    cancelButton.innerHTML = 'Cancel';
+    cancelButton.onclick = function() {
+        answerDiv.remove();
+    }
+    answerDivBottomRight.appendChild(cancelButton);
+
+    var answerDivButton = document.createElement('button');
+    answerDivButton.classList.add('answerDivButton');
+    answerDivButton.innerHTML = 'Send';
+    answerDivButton.onclick = function() {
+        socket.emit('addUpdate', userID, textarea.value);
+        answerDiv.remove();
+    }
+    answerDivBottomRight.appendChild(answerDivButton);
+
+    answerDiv.appendChild(answerDivBottomRight);
+
+    insertAfter(answerDiv, this);
+}
+
+function refreshUpdates() {
+    $('updateList').empty();
+    socket.emit('getUpdates');
+    socket.on('updatesRes', function(res) {
+        for (var time of Object.keys(res)) {
+            var update = res[time];
+            var updateDiv = document.createElement('div');
+            updateDiv.classList.add('updateBody');
+            var dateObj = new Date(parseInt(time));
+            updateDiv.innerHTML = '<span class = "updateBodyName">' + update.sender.firstName + ' ' + update.sender.lastName + '</span>' +
+                '<span class = "updateBodyDate">' + dateObj.toLocaleDateString() + ' @ ' + dateObj.toLocaleTimeString() + '</span>' + update.content;
+            document.getElementById('updateList').appendChild(updateDiv);
+        }
+    })
+}
+
 function refresh(reverse) {
     document.getElementById('refreshGraphic').classList.add('rotate');
     $('#questionPanel').empty();
     addQuestions(sortType, reverse);
+    refreshUpdates();
 }
 
 document.getElementById('refresh').onclick = refresh;
@@ -272,6 +322,12 @@ firebase.auth().onAuthStateChanged(function(user) {
             socket.emit('askQuestion', user.uid, data);
             document.getElementById('askQuestionPopup').style.display = 'none';
         }
+        socket.emit('getUserName', userID);
+        socket.on('userNameRes', function(res) {
+            if (res.isAdmin) {
+                document.getElementById('newUpdateButton').style.display = 'inline-block';
+            }
+        })
     } else {
         window.location.href = '/signup.html';
     }

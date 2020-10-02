@@ -11,7 +11,7 @@ function signUpUser() {
     firebase.auth().createUserWithEmailAndPassword(email.value, password.value).then(auth => {
         socket.emit('createUser', email.value, auth.user.uid, document.getElementById('fname').value, document.getElementById('lname').value);
         console.log("we signed up");
-        window.location = 'login.html';
+        window.location = '/';
     }).catch(error => {
         alert(error.message);
     })
